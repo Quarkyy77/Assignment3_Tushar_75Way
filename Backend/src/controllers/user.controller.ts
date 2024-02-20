@@ -21,9 +21,9 @@ export const createShiftRequest = async (
       rent: Math.floor(Math.random() * 10000),
     });
     await shiftingRequest.save();
-    user.shiftReq.push(shiftingRequest._id);
-
-    await user.save();
+     await User.findByIdAndUpdate(req.userId, {
+      $push: { requests: shiftingRequest._id },
+    });
     return res.status(201).json({
       rent: shiftingRequest.rent,
       message: " successfully created shift request...",
